@@ -3,7 +3,7 @@ angular.module('app').service('TodosStore', function(Store, Id) {
 		getInitialState: function() {
 			return {
 				todos: Immutable.OrderedMap({
-					'asd': { id: 'asd', text: 'sdfsdfsdf', completed: false }
+					'asd': { id: 'asd', text: 'sdfsdfsdf', completed: true }
 				}),
 				newTodo: ''
 			};
@@ -20,7 +20,6 @@ angular.module('app').service('TodosStore', function(Store, Id) {
 			var id = Id.next(),
 				text = payload.text,
 				todos = this.state.todos;
-
 
 			this.setState({
 				todos: todos.set(id, {
@@ -44,6 +43,20 @@ angular.module('app').service('TodosStore', function(Store, Id) {
 		updateText: function(payload) {
 			this.setState({
 				newTodo: payload.text
+			});
+		},
+
+		updateStatus: function(payload) {
+			var todos = this.state.todos,
+				todo = todos.get(payload.id)
+
+			// TODO: use Map for single todo
+			this.setState({
+				todos: todos.set(payload.id, {
+					id: todo.id,
+					text: todo.text,
+					completed: payload.completed
+				})
 			});
 		}
 	});

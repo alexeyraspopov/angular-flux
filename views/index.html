@@ -1,6 +1,10 @@
-<input type="text" ng-keydown="updateText($event)" fl-bind="newTodo">
+<input type="text" ng-keydown="updateText($event)" fl-value="newTodo">
 <button ng-click="addTodo()">Add</button>
 
 <ul>
-	<li ng-repeat="todo in todos">{{ todo.text }} <button ng-click="removeTodo(todo.id)">&times;</button></li>
+	<li ng-repeat="todo in todos">
+		<input type="checkbox" ng-click="updateStatus(todo, $event)" fl-checked="todo.completed">
+		{{ todo.text }}
+		<button ng-click="removeTodo(todo.id)">&times;</button>
+	</li>
 </ul>

@@ -19,6 +19,14 @@ angular.module('app').service('TodosActions', function(Dispatcher) {
 				actionType: 'updateText',
 				text: text
 			});
+		},
+
+		updateStatus: function(id, completed) {
+			Dispatcher.dispatch({
+				actionType: 'updateStatus',
+				id: id,
+				completed: completed
+			});
 		}
 	};
 });
