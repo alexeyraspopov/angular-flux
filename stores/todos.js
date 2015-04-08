@@ -45,11 +45,12 @@ angular.module('app').service('TodosStore', function(Store, Id) {
 		},
 
 		updateStatus: function(payload) {
-			var todos = this.state.todos,
-				todo = todos.get(payload.id);
+			var todos = this.state.todos;
 
 			this.setState({
-				todos: todos.set(payload.id, todo.set('completed', payload.completed))
+				todos: todos.updateIn([payload.id], function(todo) {
+					return todo.set('completed', payload.completed);
+				})
 			});
 		}
 	});
