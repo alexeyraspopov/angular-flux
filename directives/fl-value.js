@@ -3,5 +3,5 @@ angular.module('app').directive('flValue', function() {
 		scope.$watch(attrs.flValue, function(value) {
 			element[0].value = value === undefined ? '' : value;
 		});
-	}
-})
+	};
+});

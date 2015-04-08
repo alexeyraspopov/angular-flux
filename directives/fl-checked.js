@@ -3,5 +3,5 @@ angular.module('app').directive('flChecked', function() {
 		scope.$watch(attrs.flChecked, function(value) {
 			element[0].checked = Boolean(value);
 		});
-	}
-})
+	};
+});
