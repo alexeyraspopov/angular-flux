@@ -10,10 +10,7 @@ angular.module('app').service('TodosStore', function(Store, Id) {
 		},
 
 		serialize: function(state) {
-			return {
-				todos: state.todos.toArray(),
-				newTodo: state.newTodo
-			};
+			return Immutable.Map(state).toJS();
 		},
 
 		add: function(payload) {
