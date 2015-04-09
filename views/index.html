@@ -5,6 +5,6 @@
 	<li ng-repeat="todo in todos | toArray">
 		<input type="checkbox" ng-click="updateStatus(todo, $event)" fl-checked="todo.completed">
 		{{ todo.text }}
-		<button ng-click="removeTodo(todo.id)">&times;</button>
+		<button ng-click="removeTodo(todo)">&times;</button>
 	</li>
 </ul>

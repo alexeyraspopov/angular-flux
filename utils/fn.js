@@ -13,7 +13,7 @@ function identity(a) {
 function id() {
 	var pointer = 1000;
 
-	return function() {
+	return function next() {
 		return (pointer++).toString(16).toUpperCase();
 	};
 }

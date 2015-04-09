@@ -1,10 +1,6 @@
 angular.module('app').controller('IndexCtrl', function($scope, TodosStore, TodosActions) {
 	TodosStore.syncWith($scope);
 
-	TodosStore.subscribe(function(state) {
-		console.log(state);
-	})
-
 	$scope.addTodo = function() {
 		TodosActions.addTodo($scope.newTodo);
 	};
@@ -17,5 +13,7 @@ angular.module('app').controller('IndexCtrl', function($scope, TodosStore, Todos
 		TodosActions.updateStatus(todo.id, event.target.checked);
 	};
 
-	$scope.removeTodo = TodosActions.removeTodo;
+	$scope.removeTodo = function(todo) {
+		TodosActions.removeTodo(todo.id);
+	};
 });
