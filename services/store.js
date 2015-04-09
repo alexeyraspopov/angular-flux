@@ -35,6 +35,7 @@ angular.module('app').service('Store', function(Dispatcher) {
 
 		Dispatcher.register(function(event, payload) {
 			if(store.hasOwnProperty(payload.actionType)){
+				// TODO: support Promises
 				store.setState(store[payload.actionType](store.state, payload));
 			}
 		});
