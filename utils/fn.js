@@ -10,10 +10,12 @@ function identity(a) {
 	return a;
 }
 
-function id() {
-	var pointer = 1000;
+function uuid() {
+	function s4() {
+		return Math.floor((1 + Math.random()) * 0x10000)
+			.toString(16)
+			.substring(1);
+	}
 
-	return function next() {
-		return (pointer++).toString(16).toUpperCase();
-	};
+	return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
 }
