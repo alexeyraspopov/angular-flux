@@ -5,13 +5,13 @@ angular.module('app').service('Store', function(Dispatcher) {
 		store = assign({
 			state: methods.getInitialState(),
 
-			setState: function(patch) {
-				assign(this.state, patch);
+			setState: function(state) {
+				this.state = state;
 				this.publish();
 			},
 
 			subscribe: function(listener) {
-				listeners.push(listener)
+				listeners.push(listener);
 			},
 
 			publish: function() {
@@ -35,7 +35,7 @@ angular.module('app').service('Store', function(Dispatcher) {
 
 		Dispatcher.register(function(event, payload) {
 			if(store.hasOwnProperty(payload.actionType)){
-				store[payload.actionType](payload);
+				store.setState(store[payload.actionType](store.state, payload));
 			}
 		});
 
