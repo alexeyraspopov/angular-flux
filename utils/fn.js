@@ -9,3 +9,11 @@ function assign(target, source) {
 function identity(a) {
 	return a;
 }
+
+function id() {
+	var pointer = 1000;
+
+	return function() {
+		return (pointer++).toString(16).toUpperCase();
+	};
+}

@@ -1,5 +1,6 @@
-angular.module('app').service('TodosStore', function(Store, Id) {
-	var Todo = Immutable.Record({ id: '', text: '', completed: false });
+angular.module('app').service('TodosStore', function(Store) {
+	var Todo = Immutable.Record({ id: '', text: '', completed: false }),
+		nextId = id();
 
 	return Store({
 		getInitialState: function() {
@@ -17,7 +18,7 @@ angular.module('app').service('TodosStore', function(Store, Id) {
 		},
 
 		add: function(payload) {
-			var id = Id.next(),
+			var id = nextId(),
 				text = payload.text,
 				todos = this.state.todos;
 
