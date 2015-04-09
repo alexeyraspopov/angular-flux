@@ -13,8 +13,7 @@ angular.module('app').service('TodosStore', function(Store) {
 		},
 
 		serialize: function(state) {
-			// FIXME: incorrect todos order after serializing
-			return Immutable.Map(state).toJS();
+			return state.toJS();
 		},
 
 		add: function(state, payload) {
