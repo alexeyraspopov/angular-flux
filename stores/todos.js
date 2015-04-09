@@ -4,12 +4,12 @@ angular.module('app').service('TodosStore', function(Store) {
 
 	return Store({
 		getInitialState: function() {
-			return {
+			return Immutable.Map({
 				todos: Immutable.OrderedMap({
 					'asd': Todo({ id: 'asd', text: 'rule the world' })
 				}),
 				newTodo: ''
-			};
+			});
 		},
 
 		serialize: function(state) {
@@ -17,43 +17,28 @@ angular.module('app').service('TodosStore', function(Store) {
 			return Immutable.Map(state).toJS();
 		},
 
-		add: function(payload) {
+		add: function(state, payload) {
 			var id = nextId(),
-				text = payload.text,
-				todos = this.state.todos;
-
-			this.setState({
-				todos: todos.set(id, Todo({
+				todo = Todo({
 					id: id,
-					text: text
-				})),
-				newTodo: ''
-			});
+					text: payload.text
+				});
+
+			return state
+				.setIn(['todos', id], todo)
+				.set('newTodo', '');
 		},
 
-		remove: function(payload) {
-			var id = payload.id,
-				todos = this.state.todos;
-			
-			this.setState({
-				todos: todos.remove(id)
-			});
+		remove: function(state, payload) {
+			return state.removeIn(['todos', payload.id]);
 		},
 
-		updateText: function(payload) {
-			this.setState({
-				newTodo: payload.text
-			});
+		updateText: function(state, payload) {
+			return state.set('newTodo', payload.text);
 		},
 
-		updateStatus: function(payload) {
-			var todos = this.state.todos;
-
-			this.setState({
-				todos: todos.updateIn([payload.id], function(todo) {
-					return todo.set('completed', payload.completed);
-				})
-			});
+		updateStatus: function(state, payload) {
+			return state.setIn(['todos', payload.id, 'completed'], payload.completed);
 		}
 	});
 });
