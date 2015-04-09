@@ -1,7 +1,7 @@
 angular.module('app').service('TodosStore', function(Store) {
 	var Todo = Immutable.Record({ id: '', text: '', completed: false });
 
-	var a = Store({
+	return Store({
 		getInitialState: function() {
 			return Immutable.Map({
 				todos: Immutable.OrderedMap({
@@ -12,13 +12,13 @@ angular.module('app').service('TodosStore', function(Store) {
 		},
 
 		deserialize: function(data) {
-			return Immutable.fromJS(data, function(k, v){
+			return Immutable.fromJS(data, function(k, v) {
 				if (!k) {
 					return v.toMap();
 				}
 
 				if (k === 'todos') {
-					return v.toOrderedMap().map(function(t){
+					return v.toOrderedMap().map(function(t) {
 						return Todo(t.toObject());
 					});
 				}
@@ -55,7 +55,4 @@ angular.module('app').service('TodosStore', function(Store) {
 			return state.setIn(['todos', payload.id, 'completed'], payload.completed);
 		}
 	});
-
-	window.store = a;
-	return a;
 });
