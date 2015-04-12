@@ -3,10 +3,10 @@ angular.module('app').service('TodosStore', function(Store) {
 
 	return Store({
 		getInitialState: function() {
-			return Immutable.Map({
-				todos: Immutable.OrderedMap({
-					'asd': Todo({ id: 'asd', text: 'rule the world' })
-				}),
+			return this.deserialize({
+				todos: {
+					'asd': { id: 'asd', text: 'rule the world' }
+				},
 				newTodo: ''
 			});
 		},
@@ -36,19 +36,16 @@ angular.module('app').service('TodosStore', function(Store) {
 		},
 
 		deserialize: function(data) {
-			return Immutable.fromJS(data, function(k, v) {
-				if (!k) {
+			return Immutable.fromJS(data, transform({
+				'': function(v) {
 					return v.toMap();
-				}
-
-				if (k === 'todos') {
+				},
+				todos: function(v) {
 					return v.toOrderedMap().map(function(t) {
 						return Todo(t.toObject());
 					});
 				}
-
-				return v;
-			});
+			}));
 		},
 
 		serialize: function(state) {

@@ -18,3 +18,9 @@ function uuid() {
 		return v.toString(16);
 	});
 }
+
+function transform(options) {
+	return function(k, v) {
+		return options.hasOwnProperty(k) ? options[k](v, k) : v;
+	};
+}
