@@ -11,26 +11,6 @@ angular.module('app').service('TodosStore', function(Store) {
 			});
 		},
 
-		deserialize: function(data) {
-			return Immutable.fromJS(data, function(k, v) {
-				if (!k) {
-					return v.toMap();
-				}
-
-				if (k === 'todos') {
-					return v.toOrderedMap().map(function(t) {
-						return Todo(t.toObject());
-					});
-				}
-
-				return v;
-			});
-		},
-
-		serialize: function(state) {
-			return state.toJS();
-		},
-
 		add: function(state, payload) {
 			var id = uuid(),
 				todo = Todo({
@@ -53,6 +33,26 @@ angular.module('app').service('TodosStore', function(Store) {
 
 		updateStatus: function(state, payload) {
 			return state.setIn(['todos', payload.id, 'completed'], payload.completed);
+		},
+
+		deserialize: function(data) {
+			return Immutable.fromJS(data, function(k, v) {
+				if (!k) {
+					return v.toMap();
+				}
+
+				if (k === 'todos') {
+					return v.toOrderedMap().map(function(t) {
+						return Todo(t.toObject());
+					});
+				}
+
+				return v;
+			});
+		},
+
+		serialize: function(state) {
+			return state.toJS();
 		}
 	});
 });
