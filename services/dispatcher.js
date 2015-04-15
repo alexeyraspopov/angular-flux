@@ -7,7 +7,9 @@ angular.module('app').service('Dispatcher', function($rootScope) {
 		},
 
 		register: function(listener) {
-			return scope.$on('dispatch', listener);
+			return scope.$on('dispatch', function(event, payload) {
+				listener(payload);
+			});
 		}
 	};
 })
