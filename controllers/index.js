@@ -1,5 +1,5 @@
 angular.module('app').controller('IndexCtrl', function($scope, TodosStore, TodosActions) {
-	TodosStore.syncWith($scope);
+	syncWith(TodosStore, $scope);
 
 	$scope.addTodo = function() {
 		TodosActions.addTodo($scope.newTodo);

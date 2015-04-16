@@ -1,11 +1,3 @@
-function assign(target, source) {
-	Object.keys(source).forEach(function(key) {
-		target[key] = source[key];
-	});
-
-	return target;
-}
-
 function identity(a) {
 	return a;
 }
@@ -23,4 +15,12 @@ function transform(options) {
 	return function(k, v) {
 		return options.hasOwnProperty(k) ? options[k](v, k) : v;
 	};
+}
+
+function syncWith(store, scope, transform) {
+	var transform = transform || identity,
+		update = function(state) { angular.extend(scope, transform(state)); };
+
+	store.subscribe(update);
+	update(store.getState());
 }
