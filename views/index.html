@@ -1,4 +1,5 @@
 <input type="text" ng-keyup="updateText($event)" fl-value="newTodo">
+<span ng-if="errors.title"><em>Please write what you want to do</em></span>
 <button ng-click="addTodo()">Add</button>
 
 <ul>
