@@ -1,8 +1,11 @@
-angular.module('app').controller('IndexCtrl', function($scope, TodosStore, TodosActions) {
-	syncWith(TodosStore, $scope);
+angular.module('app').controller('IndexCtrl', function($scope, TodosStore, TodosStatesStore, TodosActions) {
+	syncWith(TodosStore, $scope, 'model');
+	syncWith(TodosStatesStore, $scope, 'states');
+
+	console.log(TodosStore.state);
 
 	$scope.addTodo = function() {
-		TodosActions.addTodo($scope.newTodo);
+		TodosActions.addTodo($scope.states.newTodo);
 	};
 
 	$scope.updateText = function(event) {

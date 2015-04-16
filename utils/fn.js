@@ -17,9 +17,8 @@ function transform(options) {
 	};
 }
 
-function syncWith(store, scope, transform) {
-	var transform = transform || identity,
-		update = function(state) { angular.extend(scope, transform(state)); };
+function syncWith(store, scope, key) {
+	var update = function(state) { scope[key] = state; };
 
 	store.subscribe(update);
 	update(store.getState());
