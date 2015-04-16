@@ -3,15 +3,21 @@ angular.module('app').service('TodosStore', function(Dispatcher) {
 
 	return ImmutableStore(Dispatcher, {
 		getInitialState: function() {
+			var todos = Array.apply(null, Array(1000)).reduce(function(acc) {
+				var id = uuid();
+
+				acc[id] = { id: id, text: id };
+
+				return acc;
+			}, {});
+
 			return this.deserialize({
-				todos: {
-					'asd': { id: 'asd', text: 'rule the world' }
-				},
-				newTodo: '',
-				errors: {
-					title: false
-				}
-			});
+				todos: todos,
+				uncompletedCount: 0
+			})
+				.update(function(v) {
+					return v.set('uncompletedCount', v.get('todos').size);
+				});
 		},
 
 		'todo:add': function(state, payload) {
@@ -23,35 +29,30 @@ angular.module('app').service('TodosStore', function(Dispatcher) {
 
 			return state
 				.setIn(['todos', id], todo)
-				.setIn(['errors', 'title'], false)
-				.set('newTodo', '');
-		},
-
-		'todo:showTitleError': function(state, payload) {
-			return state
-				.setIn(['errors', 'title'], true);
+				.update('uncompletedCount', function(n) { return n + 1; });
 		},
 
 		'todo:remove': function(state, payload) {
-			return state.removeIn(['todos', payload.id]);
-		},
+			var completed = state.getIn(['todos', payload.id, 'completed']),
+				x = Number(completed) - 1;
 
-		'todo:updateText': function(state, payload) {
 			return state
-				.set('newTodo', payload.text)
-				.setIn(['errors', 'title'], false);
+				.removeIn(['todos', payload.id])
+				.update('uncompletedCount', function(n) { return n + x; });
 		},
 
 		'todo:updateStatus': function(state, payload) {
-			return state.setIn(['todos', payload.id, 'completed'], payload.completed);
+			var x = 2 * Number(payload.completed) - 1;
+
+			return state
+				.setIn(['todos', payload.id, 'completed'], payload.completed)
+				.update('uncompletedCount', function(n) { return n - x; });
 		},
 
 		deserialize: function(data) {
 			return Immutable.fromJS(data, transform({
+				// TODO: remove this after ImmutableJS update
 				'': function(v) {
-					return v.toMap();
-				},
-				errors: function(v) {
 					return v.toMap();
 				},
 				todos: function(v) {
@@ -63,7 +64,9 @@ angular.module('app').service('TodosStore', function(Dispatcher) {
 		},
 
 		serialize: function(state) {
-			return state.toJS();
+			return state.update('todos', function(todos) {
+				return todos.toList();
+			}).toJS();
 		}
 	});
 });
