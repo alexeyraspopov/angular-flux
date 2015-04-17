@@ -45,12 +45,6 @@ angular.module('app').service('TodosStore', function(Dispatcher) {
 		};
 	}
 
-	function toArray(object) {
-		return Object.keys(object).map(function(key) {
-			return object[key];
-		});
-	}
-
 	function genTodos(count) {
 		return Array.apply(null, Array(count)).reduce(function(acc) {
 			var id = uuid();

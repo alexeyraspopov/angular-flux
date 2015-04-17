@@ -23,3 +23,9 @@ function syncWith(store, scope, key) {
 	store.subscribe(update);
 	update(store.getState());
 }
+
+function toArray(object) {
+	return Object.keys(object).map(function(key) {
+		return object[key];
+	});
+}
