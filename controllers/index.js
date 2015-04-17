@@ -2,8 +2,6 @@ angular.module('app').controller('IndexCtrl', function($scope, TodosStore, Todos
 	syncWith(TodosStore, $scope, 'model');
 	syncWith(TodosStatesStore, $scope, 'states');
 
-	console.log(TodosStore.state);
-
 	$scope.addTodo = function() {
 		TodosActions.addTodo($scope.states.newTodo);
 	};
