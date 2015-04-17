@@ -8,10 +8,9 @@ angular.module('app').service('TodosStore', function(Dispatcher) {
 		},
 
 		'todo:add': function(state, payload) {
-			var id = uuid(),
-				todo = { id: id, text: payload.text, completed: false };
+			var todo = Todo(payload.text);
 
-			state.todos[id] = todo;
+			state.todos[todo.id] = todo;
 			state.uncompletedCount += 1;
 		},
 
@@ -37,6 +36,14 @@ angular.module('app').service('TodosStore', function(Dispatcher) {
 			};
 		}
 	});
+
+	function Todo(text) {
+		return {
+			id: uuid(),
+			text: text,
+			completed: false
+		};
+	}
 
 	function toArray(object) {
 		return Object.keys(object).map(function(key) {
