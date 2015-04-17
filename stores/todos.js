@@ -3,7 +3,7 @@ angular.module('app').service('TodosStore', function(Dispatcher) {
 
 	return ImmutableStore(Dispatcher, {
 		getInitialState: function() {
-			var todos = Array.apply(null, Array(1000)).reduce(function(acc) {
+			var todos = Array.apply(null, Array(10000)).reduce(function(acc) {
 				var id = uuid();
 
 				acc[id] = { id: id, text: id };
