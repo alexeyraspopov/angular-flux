@@ -12,9 +12,12 @@ angular.module('app')
 				controller: 'IndexCtrl'
 			});
 	})
-	.run(function(TodosStore) {
+	.run(function(TodosStore, TodosStatesStore) {
 		window.getState = function() {
-			return JSON.stringify(TodosStore.getState());
+			return JSON.stringify({
+				TodosStore: TodosStore.getState(),
+				TodosStatesStore: TodosStatesStore.getState(),
+			});
 		};
 
 		window.setState = function(state) {
