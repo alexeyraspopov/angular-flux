@@ -34,6 +34,13 @@ angular.module('app').service('TodosStore', function(Dispatcher) {
 				todos: toArray(state.todos),
 				uncompletedCount: state.uncompletedCount
 			};
+		},
+
+		deserialize: function(data) {
+			return {
+				todos: toObject(data.todos, 'id'),
+				uncompletedCount: data.uncompletedCount
+			};
 		}
 	});
 

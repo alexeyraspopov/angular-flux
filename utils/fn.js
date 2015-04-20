@@ -33,3 +33,10 @@ function toArray(object) {
 		return object[key];
 	});
 }
+
+function toObject(array, primaryKey) {
+	return array.reduce(function(acc, item) {
+		acc[item[primaryKey]] = item;
+		return acc;
+	}, {});
+}
