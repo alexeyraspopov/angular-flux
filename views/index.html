@@ -1,16 +1,16 @@
 <div ng-if="true">
-	<input type="text" ng-keyup="updateText($event)" fl-value="states.newTodo">
+	<input type="text" fl-change="updateText($event)" fl-value="states.newTodo">
 	<span ng-if="states.errors.title"><em>Please write what you want to do</em></span>
 	<button ng-click="addTodo()">Add</button>
 </div>
 
 <ul>
 	<li ng-repeat="todo in model.todos track by todo.id">
-		<input type="checkbox" ng-click="updateStatus(todo, $event)" fl-checked="todo.completed">
+		<input type="checkbox" fl-change="updateStatus(todo, $event)" fl-value="todo.completed">
 		<span ng-bind="todo.text"></span>
 		<button ng-click="removeTodo(todo)">&times;</button>
 	</li>
 </ul>
 
 
-<p><span ng-bind="uncompletedCount"></span> items left</p>
+<p><span ng-bind="model.uncompletedCount"></span> items left</p>
