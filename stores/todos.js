@@ -2,8 +2,8 @@ angular.module('app').service('TodosStore', function(Dispatcher) {
 	return MutableStore(Dispatcher, {
 		getInitialState: function() {
 			return {
-				todos: genTodos(10000),
-				uncompletedCount: 0
+				todos: genTodos(10),
+				uncompletedCount: 10
 			};
 		},
 
@@ -49,7 +49,7 @@ angular.module('app').service('TodosStore', function(Dispatcher) {
 		return Array.apply(null, Array(count)).reduce(function(acc) {
 			var id = uuid();
 
-			acc[id] = { id: id, text: id };
+			acc[id] = { id: id, text: id, completed: false };
 
 			return acc;
 		}, {});
