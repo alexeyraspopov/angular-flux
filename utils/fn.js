@@ -7,11 +7,13 @@ function uuid() {
 	});
 }
 
+function applyToScope(scope, locals) {
+	scope[locals.key] = locals.state;
+}
+
 function syncWith(store, scope, key) {
 	var update = function(state) {
-		scope.$evalAsync(function(scope) {
-			scope[key] = state;
-		});
+		scope.$evalAsync(applyToScope, { state: state, key: key });
 	};
 
 	store.subscribe(update);
