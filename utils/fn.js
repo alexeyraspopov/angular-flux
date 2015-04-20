@@ -1,7 +1,3 @@
-function identity(a) {
-	return a;
-}
-
 function uuid() {
 	return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
 		var r = Math.random() * 16 | 0,
@@ -9,12 +5,6 @@ function uuid() {
 
 		return v.toString(16);
 	});
-}
-
-function transform(options) {
-	return function(k, v) {
-		return options.hasOwnProperty(k) ? options[k](v, k) : v;
-	};
 }
 
 function syncWith(store, scope, key) {
@@ -28,13 +18,13 @@ function syncWith(store, scope, key) {
 	update(store.getState());
 }
 
-function toArray(object) {
+function toIndexed(object) {
 	return Object.keys(object).map(function(key) {
 		return object[key];
 	});
 }
 
-function toObject(array, primaryKey) {
+function toKeyed(array, primaryKey) {
 	return array.reduce(function(acc, item) {
 		acc[item[primaryKey]] = item;
 		return acc;

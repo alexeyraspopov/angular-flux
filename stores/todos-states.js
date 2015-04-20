@@ -25,15 +25,7 @@ angular.module('app').service('TodosStatesStore', function(Dispatcher) {
 		},
 
 		deserialize: function(data) {
-			return Immutable.fromJS(data, transform({
-				// TODO: remove these 2 functions after ImmutableJS update
-				'': function(v) {
-					return v.toMap();
-				},
-				errors: function(v) {
-					return v.toMap();
-				}
-			}));
+			return Immutable.fromJS(data);
 		},
 
 		serialize: function(state) {

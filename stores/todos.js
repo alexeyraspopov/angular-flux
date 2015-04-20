@@ -31,14 +31,14 @@ angular.module('app').service('TodosStore', function(Dispatcher) {
 
 		serialize: function(state) {
 			return {
-				todos: toArray(state.todos),
+				todos: toIndexed(state.todos),
 				uncompletedCount: state.uncompletedCount
 			};
 		},
 
 		deserialize: function(data) {
 			return {
-				todos: toObject(data.todos, 'id'),
+				todos: toKeyed(data.todos, 'id'),
 				uncompletedCount: data.uncompletedCount
 			};
 		}
