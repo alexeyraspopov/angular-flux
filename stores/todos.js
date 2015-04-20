@@ -1,9 +1,11 @@
 angular.module('app').service('TodosStore', function(Dispatcher) {
 	return MutableStore(Dispatcher, {
 		getInitialState: function() {
+			var count = 10;
+
 			return {
-				todos: genTodos(10),
-				uncompletedCount: 10
+				todos: genTodos(count),
+				uncompletedCount: count
 			};
 		},
 
@@ -53,7 +55,7 @@ angular.module('app').service('TodosStore', function(Dispatcher) {
 	}
 
 	function genTodos(count) {
-		return toKeyed(Array.apply(null, Array(count)).map(function(acc) {
+		return toKeyed(Array.apply(null, Array(count)).map(function() {
 			var id = uuid();
 
 			return { id: id, text: id, completed: false };
