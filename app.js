@@ -1,1 +1,1 @@
-angular.module('app', ['ngRoute', 'angular-toArrayFilter']);
+angular.module('app', ['ngRoute']);
