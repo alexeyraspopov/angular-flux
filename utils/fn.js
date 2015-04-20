@@ -12,12 +12,15 @@ function applyToScope(scope, locals) {
 }
 
 function syncWith(store, scope, key) {
-	var update = function(state) {
-		scope.$evalAsync(applyToScope, { state: state, key: key });
+	var updateScope = function(state) {
+		scope.$evalAsync(applyToScope, {
+			state: state,
+			key: key
+		});
 	};
 
-	store.subscribe(update);
-	update(store.getState());
+	store.subscribe(updateScope);
+	updateScope(store.getState());
 }
 
 function toIndexed(object) {
