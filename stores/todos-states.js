@@ -6,7 +6,7 @@ angular.module('app').service('TodosStatesStore', function(Dispatcher) {
 				errors: {
 					title: false
 				}
-			})
+			});
 		},
 
 		'todo:add': function(state) {
