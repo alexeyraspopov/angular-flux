@@ -21,6 +21,9 @@ angular.module('app')
 		};
 
 		window.setState = function(state) {
-			return TodosStore.injectState(JSON.parse(state));
+			var data = JSON.parse(state);
+
+			TodosStore.injectState(state.TodosStore);
+			TodosStatesStore.injectState(state.TodosStatesStore);
 		};
 	});
