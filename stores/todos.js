@@ -53,12 +53,10 @@ angular.module('app').service('TodosStore', function(Dispatcher) {
 	}
 
 	function genTodos(count) {
-		return Array.apply(null, Array(count)).reduce(function(acc) {
+		return toKeyed(Array.apply(null, Array(count)).map(function(acc) {
 			var id = uuid();
 
-			acc[id] = { id: id, text: id, completed: false };
-
-			return acc;
-		}, {});
+			return { id: id, text: id, completed: false };
+		}), 'id');
 	}
 });
