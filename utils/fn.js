@@ -18,7 +18,11 @@ function transform(options) {
 }
 
 function syncWith(store, scope, key) {
-	var update = function(state) { scope[key] = state; };
+	var update = function(state) {
+		scope.$evalAsync(function(scope) {
+			scope[key] = state;
+		});
+	};
 
 	store.subscribe(update);
 	update(store.getState());
