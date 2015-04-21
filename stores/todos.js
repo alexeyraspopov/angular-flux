@@ -56,9 +56,11 @@ angular.module('app').service('TodosStore', function(Dispatcher) {
 
 	function genTodos(count) {
 		return toKeyed(Array.apply(null, Array(count)).map(function() {
-			var id = uuid();
+			var todo = Todo();
 
-			return { id: id, text: id, completed: false };
+			todo.text = todo.id;
+
+			return todo;
 		}), 'id');
 	}
 });

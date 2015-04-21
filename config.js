@@ -12,7 +12,14 @@ angular.module('app')
 				controller: 'IndexCtrl'
 			});
 	})
-	.run(function(TodosStore, TodosStatesStore) {
+	.run(function(TodosStore, TodosStatesStore, TodosActions, Dispatcher) {
+		window.fluxModules = {
+			TodosStore: TodosStore,
+			TodosStatesStore: TodosStatesStore,
+			TodosActions: TodosActions,
+			Dispatcher: Dispatcher
+		};
+
 		window.getState = function() {
 			return JSON.stringify({
 				TodosStore: TodosStore.getState(),
@@ -23,7 +30,10 @@ angular.module('app')
 		window.setState = function(state) {
 			var data = JSON.parse(state);
 
-			TodosStore.injectState(state.TodosStore);
-			TodosStatesStore.injectState(state.TodosStatesStore);
+			TodosStore.state = TodosStore.deserialize(data.TodosStore);
+			TodosStore.publish(TodosStore.getState());
+
+			TodosStatesStore.state = TodosStatesStore.deserialize(data.TodosStatesStore);
+			TodosStatesStore.publish(TodosStatesStore.getState());
 		};
 	});
